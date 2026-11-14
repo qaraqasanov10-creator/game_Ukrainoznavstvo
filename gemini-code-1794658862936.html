@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДЗ: Цифрова Грамотність</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; max-width: 600px; margin: 0 auto; color: #333; }
+        .quiz-container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; }
+        .option { display: block; width: 100%; margin: 10px 0; padding: 15px; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer; text-align: left; font-size: 16px; transition: 0.2s; }
+        .option:hover { background: #d5dbdb; }
+        .result { font-size: 24px; font-weight: bold; text-align: center; margin-top: 20px; display: none; color: #27ae60; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Завдання з Громадянської освіти: Інтернет</h2>
+    <div id="question-box">
+        <p id="question-text" style="font-size: 18px; font-weight: bold;"></p>
+        <div id="options-box"></div>
+    </div>
+    <p>Питання: <span id="q-num">1</span>/10</p>
+    <div class="result" id="result-box"></div>
+</div>
+
+<script>
+    const questions = [
+        { q: "Що таке цифровий слід?", options: ["Відбиток пальця на екрані смартфона", "Інформація про твої дії в інтернеті (лайки, пости)", "Програма для захисту від вірусів"], answer: 1 },
+        { q: "Яку інформацію БЕЗПЕЧНО викладати в мережу?", options: ["Свою домашню адресу", "Фото з квитком на концерт", "Фотографію свого малюнка або кота"], answer: 2 },
+        { q: "Який пароль вважається надійним?", options: ["12345678", "qwertyuiop", "TrP7$kL9_!"], answer: 2 },
+        { q: "Що робити, якщо тебе ображають в онлайн-грі?", options: ["Ображати у відповідь", "Заблокувати гравця і сказати дорослим", "Дати йому свій номер телефону для розбірок"], answer: 1 },
+        { q: "Писати повідомлення CAPS LOCK-ом означає...", options: ["Що ти кричиш на співрозмовника", "Що ти дуже радієш", "Що в тебе зламалася клавіатура"], answer: 0 },
+        { q: "Ти бачиш новину: 'ШОК! Прибульці в Києві!'. Твої дії?", options: ["Негайно переслати всім друзям", "Повірити, бо це написано в інтернеті", "Перевірити новину на офіційних новинних сайтах"], answer: 2 },
+        { q: "Для чого використовують клікбейт?", options: ["Щоб змусити тебе натиснути на посилання через емоції", "Щоб повідомити важливу правдиву інформацію", "Щоб навчити тебе медіаграмотності"], answer: 0 },
+        { q: "Правило трьох джерел означає, що...", options: ["Треба читати новини тільки 3 рази на день", "Треба перевірити інформацію на трьох різних надійних ресурсах", "Треба мати 3 сторінки в соцмережах"], answer: 1 },
+        { q: "Чи можуть фотографії в інтернеті бути підробленими?", options: ["Ні, фото неможливо підробити", "Так, за допомогою фотошопу або ШІ", "Тільки якщо фото чорно-біле"], answer: 1 },
+        { q: "Твій друг просить твій пароль від Instagram. Твої дії:", options: ["Дати, адже він друг", "Відмовити, бо пароль — це особиста річ", "Дати пароль і попросити його"], answer: 1 }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        if (current >= questions.length) {
+            document.getElementById('question-box').style.display = 'none';
+            document.getElementById('result-box').style.display = 'block';
+            document.getElementById('result-box').innerHTML = `Твій результат: ${score} з 10!<br>Зроби скріншот та відправ вчителю.`;
+            return;
+        }
+        document.getElementById('q-num').innerText = current + 1;
+        document.getElementById('question-text').innerText = questions[current].q;
+        let optionsHtml = "";
+        questions[current].options.forEach((opt, index) => {
+            optionsHtml += `<button class="option" onclick="check(${index})">${opt}</button>`;
+        });
+        document.getElementById('options-box').innerHTML = optionsHtml;
+    }
+
+    function check(index) {
+        if (index === questions[current].answer) score++;
+        current++;
+        loadQuestion();
+    }
+
+    loadQuestion();
+</script>
+</body>
+</html>
